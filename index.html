@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Controle Financeiro</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>💰 Controle Financeiro</h1>
+    <button id="themeToggle" class="theme-toggle" title="Alternar tema">🌙</button>
+  </header>
+
+  <main class="container">
+    <!-- Resumo -->
+    <section class="summary">
+      <div class="card card-receita">
+        <span class="card-label">Receitas</span>
+        <span id="totalReceitas" class="card-value">R$ 0,00</span>
+      </div>
+      <div class="card card-despesa">
+        <span class="card-label">Despesas</span>
+        <span id="totalDespesas" class="card-value">R$ 0,00</span>
+      </div>
+      <div class="card card-saldo">
+        <span class="card-label">Saldo</span>
+        <span id="saldoTotal" class="card-value">R$ 0,00</span>
+      </div>
+    </section>
+
+    <div class="grid">
+      <!-- Formulário -->
+      <section class="form-section">
+        <h2>Novo Lançamento</h2>
+        <form id="formLancamento">
+          <input type="hidden" id="editId" />
+
+          <label for="tipo">Tipo</label>
+          <select id="tipo" required>
+            <option value="receita">Receita</option>
+            <option value="despesa">Despesa</option>
+          </select>
+
+          <label for="descricao">Descrição</label>
+          <input type="text" id="descricao" placeholder="Ex: Salário, Mercado..." required maxlength="60" />
+
+          <label for="categoria">Categoria</label>
+          <input list="categoriasList" id="categoria" placeholder="Ex: Alimentação" required maxlength="30" />
+          <datalist id="categoriasList"></datalist>
+
+          <label for="valor">Valor (R$)</label>
+          <input type="number" id="valor" step="0.01" min="0.01" placeholder="0,00" required />
+
+          <label for="data">Data</label>
+          <input type="date" id="data" required />
+
+          <div class="form-actions">
+            <button type="submit" id="btnSalvar" class="btn btn-primary">Adicionar</button>
+            <button type="button" id="btnCancelar" class="btn btn-ghost hidden">Cancelar</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Gráficos -->
+      <section class="charts-section">
+        <h2>Despesas por Categoria</h2>
+        <div id="graficoCategorias" class="bar-chart"></div>
+
+        <h2>Evolução do Saldo</h2>
+        <div id="graficoSaldo" class="line-chart"></div>
+      </section>
+    </div>
+
+    <!-- Filtros + Tabela -->
+    <section class="lancamentos-section">
+      <div class="lancamentos-header">
+        <h2>Lançamentos</h2>
+        <div class="filters">
+          <select id="filtroTipo">
+            <option value="">Todos os tipos</option>
+            <option value="receita">Receitas</option>
+            <option value="despesa">Despesas</option>
+          </select>
+          <select id="filtroCategoria">
+            <option value="">Todas as categorias</option>
+          </select>
+          <input type="month" id="filtroMes" />
+          <button id="limparFiltros" class="btn btn-ghost">Limpar</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Descrição</th>
+              <th>Categoria</th>
+              <th>Tipo</th>
+              <th class="num">Valor</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaLancamentos"></tbody>
+        </table>
+        <p id="vazio" class="empty hidden">Nenhum lançamento encontrado.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <small>Dados salvos localmente no seu navegador.</small>
+    <button id="exportar" class="btn btn-ghost">Exportar JSON</button>
+    <button id="limparTudo" class="btn btn-danger">Limpar Tudo</button>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
